@@ -46,7 +46,7 @@ to_iso8601 <- function(datetime, offset) {
 
 transform_volumes <- function(json_data) {
   #Extract the edges from the json_data
-  edges <- json_data$trafficData$volume$buHour$edges
+  edges <- json_data$trafficData$volume$byHour$edges
   
   #Using map_df to extract the data and convert to a dataframe
   df <- map_df(edges, function(edge) {
