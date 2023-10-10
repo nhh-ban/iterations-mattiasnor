@@ -3,6 +3,7 @@ library(tidyverse)
 library(purrr)
 library(lubridate)
 library(anytime)
+library(tibble)
 
 
 ## Problem 3 -----------
@@ -40,4 +41,22 @@ to_iso8601 <- function(datetime, offset) {
   return(paste0(iso_date, "Z"))
 }
 
+
+## Problem 5 -----------
+
+transform_volumes <- function(json_data) {
+  #Extract the edges from the json_data
+  edges <- json_data$trafficData$volume$buHour$edges
+  
+  #Using map_df to extract the data and convert to a dataframe
+  df <- map_df(edges, function(edge) {
+    tibble(
+      from = as_datetime(edge$node$from), 
+      to = as_datetime(edge$node$to), 
+      volume = edge$node$total$volumeNumbers$volume
+    )
+  })
+  
+  return(df)
+}
 

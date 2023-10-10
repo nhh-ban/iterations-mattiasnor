@@ -1,29 +1,28 @@
 library(glue)
 
 vol_qry <- function(id, from, to) {
-  query_string <- glue::glue('
-    {{
-      trafficData(trafficRegistrationPointId: "{id}") {{
-        volume {{
-          byHour(from: "{from}", to: "{to}") {{
-            edges {{
-              node {{
+  query_string <- glue(
+    '{
+      trafficData(trafficRegistrationPointId: "{id}") {
+        volume {
+          byHour(from: "{from}", to: "{to}") {
+            edges {
+              node {
                 from
                 to
-                total {{
-                  volumeNumbers {{
+                total {
+                  volumeNumbers {
                     volume
-                  }}
-                }}
-              }}
-            }}
-          }}
-        }}
-      }}
-    }}', .open = '{{', .close = '}}')
-  
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }',
+    .open = '"{', 
+    .close = '}"'
+  )
   return(query_string)
 }
-
-                             
-                             
